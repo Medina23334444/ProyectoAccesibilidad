@@ -1,0 +1,25 @@
+# --- Framework Core ---
+Django==4.2.11
+# Si usas Django Rest Framework para la API:
+djangorestframework==3.14.0
+
+# --- Conexión con Frontend (Vue) ---
+# Vital para que el puerto 3000 pueda hablar con el 8000
+django-cors-headers==4.3.1
+
+# Dependencia común para manejo de PDFs
+pypdf==4.1.0
+pdfplumber==0.10.4
+
+# --- Utilidades y Servidor ---
+# Para manejar variables de entorno si las usas
+django-environ==0.11.2
+# Cliente HTTP por si tu backend llama a otras APIs
+requests==2.31.0
+# Servidor de producción (recomendado para contenedores)
+gunicorn==21.2.0
+
+# --- Otros ---
+# Para manejo de imágenes en Django (si usas ImageField)
+Pillow==10.2.0
+ftfy==6.2.0

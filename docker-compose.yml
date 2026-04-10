@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  # Servicio para Django (Backend) - Puerto 8000
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: django_backend
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=1
+      - PYTHONUNBUFFERED=1
+    # Ejecuta migraciones y levanta el servidor automáticamente
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+
+  # Servicio para Vue/Vite (Frontend) - Puerto 3000
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vue_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: always
+
+# Definimos volúmenes para que no se pierdan tus archivos generados
+volumes:
+  media_data:
+  reportes_data:
