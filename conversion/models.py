@@ -6,6 +6,8 @@ from django.core.files.base import ContentFile
 from conversion.styles import obtener_css_unl
 from conversion.utils import AnalizadorSemantico, ProcesadorDocumento, GeneradorHTML
 from validacion.models import DocumentoPDF
+from .crypto_utils import descifrar_archivo_temporal
+from django.conf import settings
 
 
 class Protocolo(models.Model):
@@ -53,68 +55,73 @@ class ConversorFormato(models.Model):
     formatoDestino = models.CharField(max_length=10, default="HTML")
     fechaConversion = models.DateTimeField(auto_now_add=True)
     tiempoEjecucion = models.FloatField(null=True, blank=True)
+    token_acceso = models.CharField(max_length=255, null=True, blank=True)
 
     # ==========================================================
     # PATRÓN: TEMPLATE METHOD (El "Director" del Proceso)
     # ==========================================================
-    def convertirPDFaHTML(self):
+
+    def convertirPDFaHTML(self, datos_cifrados=None):
         """
-        Este método representa el 'Template Method'. Define la estructura
-        fija e inalterable del proceso: 1. Extraer -> 2. Generar -> 3. Guardar.
+        Implementación del Template Method con seguridad integrada.
+        Recibe los bytes cifrados para procesarlos exclusivamente en RAM.
         """
         inicio = time.time()
 
-        # ==========================================================
-        # PATRÓN: STRATEGY (Los "Especialistas" Técnicos)
-        # ==========================================================
-        # Aquí el sistema selecciona las herramientas (estrategias)
-        # necesarias para realizar el trabajo pesado fuera del modelo.
-        proc = ProcesadorDocumento()  # Estrategia de extracción física
-        analizador = AnalizadorSemantico()  # Estrategia de reglas semánticas
-        generador = GeneradorHTML()  # Estrategia de formato de salida
+        # Estrategias técnicas (Patrón Strategy)
+        proc = ProcesadorDocumento()
+        analizador = AnalizadorSemantico()
+        generador = GeneradorHTML()
 
         try:
-            # --- PASO 1 DEL TEMPLATE (Delegado a una Strategy) ---
-            # Se encarga de la lectura técnica del PDF.
-            pdf_data = proc.extraer_toda_la_estructura(
-                self.documento_origen.ruta_archivo.path,
-                self.documento_origen.id
-            )
+            # --- PASO 1: DESCARGA Y DESCIFRADO (VOLATILIDAD) ---
+            # Si el ecosistema envía datos protegidos, los desciframos en memoria.
+            if datos_cifrados:
+                # AES-256-GCM verifica la integridad antes de entregar los bytes.
+                pdf_bytes = descifrar_archivo_temporal(datos_cifrados, settings.AES_KEY)
+                # Procesamos desde bytes (RAM) para evitar archivos temporales en disco.
+                pdf_data = proc.extraer_desde_bytes(pdf_bytes, self.documento_origen.id)
+            else:
+                # Flujo estándar de respaldo usando la ruta física
+                pdf_data = proc.extraer_toda_la_estructura(
+                    self.documento_origen.ruta_archivo.path,
+                    self.documento_origen.id
+                )
 
-            # --- PASO 2 DEL TEMPLATE (Delegado a una Strategy) ---
-            # Se encarga de la creación del código HTML accesible.
+            # --- PASO 2: GENERACIÓN SEMÁNTICA ---
             html_final, conteo = generador.construir_html(
                 pdf_data, proc, analizador,
                 self.documento_origen.nombre_archivo,
                 obtener_css_unl()
             )
 
-            # --- PASO 3 DEL TEMPLATE (Paso fijo del algoritmo) ---
-            # Este paso es inalterable y garantiza la persistencia en la DB.
+            # --- PASO 3: PERSISTENCIA FIJA ---
             self._finalizar_guardado(html_final, conteo, inicio)
 
-            return True, "Conversión exitosa"
-        except Exception as e:
-            # Manejo de errores para asegurar que el flujo no se rompa abruptamente [cite: 73]
-            return False, str(e)
+            return True, "Conversión exitosa bajo estándares NIST/RFC"
 
-    # ==========================================================
-    # PASO FINAL DEL TEMPLATE METHOD (Persistencia)
-    # ==========================================================
+        except Exception as e:
+            # Captura fallos de integridad o errores de procesamiento.
+            return False, f"Error de seguridad o procesamiento: {str(e)}"
+
     def _finalizar_guardado(self, html_content, conteo, inicio):
-        # Creación del registro con niveles de accesibilidad AA
+        """Paso inalterable del algoritmo para registrar resultados en la DB."""
         res, _ = ArchivoHTML.objects.update_or_create(
             documento_fuente=self.documento_origen,
             defaults={
                 'cantidadEtiquetas': conteo,
-                'etiquetasSemanticas': "main, article, p, table, tr, td, h1, h2, section, img, figure",
+                'etiquetasSemanticas': "main, article, h1, h2, p, table, figure",
                 'lenguajeHTML': "es",
                 'nivelAccesibilidad': "AA (Intermedio)"
             }
         )
-        nombre_final = f"{os.path.splitext(os.path.basename(self.documento_origen.ruta_archivo.name))[0]}.html"
+
+        nombre_final = f"{os.path.splitext(self.documento_origen.nombre_archivo)[0]}.html"
         res.archivo.save(nombre_final, ContentFile(html_content.encode('utf-8')), save=True)
+
         self.tiempoEjecucion = time.time() - inicio
         self.save()
+
+        # Actualizamos el estado del documento original en el módulo de validación
         self.documento_origen.estado = 'CONVERTIDO'
         self.documento_origen.save()

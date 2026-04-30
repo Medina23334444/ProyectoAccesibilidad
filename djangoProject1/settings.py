@@ -11,18 +11,43 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
 from pathlib import Path
+import base64
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+# 2. Inicializar la lectura del archivo .env
+env = environ.Env()
+# Leemos el archivo .env que está en la raíz de tu proyecto
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+# 3. ❌ ANTES tenías esto (Bórralo o coméntalo):
+# SECRET_KEY = 'django-insecure-xxxxxxxxxxxxxxxxx'
+
+# 4. ✅ AHORA usas esto (Seguridad Pro):
+SECRET_KEY = env('DJANGO_SECRET_KEY')
+
+# 5. Configurar el modo DEBUG desde el .env
+DEBUG = env.bool('DEBUG', default=False)
+
+# 6. Configurar la clave AES-256 para el cifrado de tus PDFs (Fase ABI)
+# Leemos la clave en base64 del .env y la convertimos a bytes
+AES_KEY_B64 = env('AES_ENCRYPTION_KEY', default=None)
+if AES_KEY_B64:
+    AES_KEY = base64.b64decode(AES_KEY_B64)
+else:
+    AES_KEY = None
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-oh$&t8v-fhra%4!wm-+ftzm1@6dd_!(1rux^+j8b%79$x8503t'
+# SECRET_KEY = 'django-insecure-oh$&t8v-fhra%4!wm-+ftzm1@6dd_!(1rux^+j8b%79$x8503t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
 ALLOWED_HOSTS = []
 

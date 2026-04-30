@@ -23,3 +23,7 @@ gunicorn==21.2.0
 # Para manejo de imágenes en Django (si usas ImageField)
 Pillow==10.2.0
 ftfy==6.2.0
+
+# --- Criptografía (Fase ABI) ---
+cryptography==42.0.5        # AES-256-GCM para cifrado de archivos
+argon2-cffi==23.1.0         # Argon2id para hashing seguro

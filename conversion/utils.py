@@ -4,6 +4,7 @@ import unicodedata
 import pdfplumber
 import os
 import html
+import io
 from django.conf import settings
 
 
@@ -88,24 +89,44 @@ class ProcesadorDocumento:
             imagenes_extraidas.append({'url': f"{settings.MEDIA_URL}{ruta_relativa}", 'bbox': bbox})
         return imagenes_extraidas
 
+    def extraer_desde_bytes(self, pdf_bytes, doc_id):
+        """
+        NUEVO MÉTODO ABI: Procesa el PDF desde memoria (RAM).
+        Recibe los bytes ya descifrados por AES-256-GCM.
+        """
+        # Convertimos los bytes en un objeto similar a un archivo en memoria
+        flujo_memoria = io.BytesIO(pdf_bytes)
+
+        # Reutilizamos la lógica de extracción pasando el flujo de memoria
+        return self._ejecutar_extraccion(flujo_memoria, doc_id)
+
     def extraer_toda_la_estructura(self, ruta_pdf, doc_id):
-        """Coordina la extracción de todos los elementos respetando el orden visual (top)."""
+        """Mantiene compatibilidad con archivos físicos si fuera necesario."""
+        return self._ejecutar_extraccion(ruta_pdf, doc_id)
+
+    def _ejecutar_extraccion(self, origen, doc_id):
+        """
+        Lógica unificada de extracción que acepta tanto rutas como objetos bytes.
+        """
         datos_por_pagina = []
-        with pdfplumber.open(ruta_pdf) as pdf:
+        # pdfplumber puede abrir tanto una ruta (str) como un objeto BytesIO
+        with pdfplumber.open(origen) as pdf:
             for i, page in enumerate(pdf.pages):
                 elementos = []
+                # ... (resto de tu lógica de extracción de imágenes, tablas y texto)
                 imgs = self.extraer_imagenes_pagina(page, doc_id, i + 1)
                 for im in imgs:
                     elementos.append({'tipo': 'img', 'contenido': im['url'], 'top': im['bbox'][1]})
+
                 tablas = page.find_tables({"snap_tolerance": 3})
                 for t in tablas:
                     elementos.append({'tipo': 'tabla', 'contenido': t.extract(), 'top': t.bbox[1]})
+
                 bboxes_excluir = [t.bbox for t in tablas] + [im['bbox'] for im in imgs]
                 palabras = page.extract_words(use_text_flow=True)
                 solo_texto = [w for w in palabras if not self.esta_en_tabla(w, bboxes_excluir)]
                 elementos.extend(self.agrupar_en_parrafos(solo_texto))
 
-                # Ordenamiento final para mantener coherencia en la lectura
                 elementos.sort(key=lambda x: x['top'])
                 datos_por_pagina.append({'elementos': elementos})
         return datos_por_pagina
