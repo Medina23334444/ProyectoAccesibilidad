@@ -27,7 +27,7 @@ def ejecutar_conversion_api(request, doc_id):
 
     # 2. CIFRADO EN REPOSO (NIST SP 800-38D)
     # Leemos el archivo original y lo ciframos con AES-256-GCM antes de procesar
-    with documento.archivo.open('rb') as f:
+    with documento.ruta_archivo.open('rb') as f:
         datos_originales = f.read()
         # Usamos la AES_KEY de tu archivo .env configurada en settings
         datos_cifrados = cifrar_archivo_temporal(datos_originales, settings.AES_KEY)
