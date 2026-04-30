@@ -4,6 +4,7 @@
 import os
 import base64
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+from cryptography.exceptions import InvalidTag
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 import secrets
@@ -23,13 +24,15 @@ def cifrar_archivo_temporal(datos: bytes, clave: bytes) -> bytes:
 
 
 def descifrar_archivo_temporal(datos_cifrados: bytes, clave: bytes) -> bytes:
-    """
-    Descifra y verifica integridad. Lanza InvalidTag si fue alterado.
-    """
+    if len(clave) != 32:
+        raise ValueError(f"Clave AES-256 debe ser 32 bytes, recibido: {len(clave)}")
     aesgcm = AESGCM(clave)
     nonce = datos_cifrados[:12]
     ciphertext = datos_cifrados[12:]
-    return aesgcm.decrypt(nonce, ciphertext, None)
+    try:
+        return aesgcm.decrypt(nonce, ciphertext, None)
+    except InvalidTag:
+        raise ValueError("Integridad comprometida: el archivo fue alterado o la clave es incorrecta")
 
 
 # ─── Argon2id: Hash de tokens de sesión ────────────────────────────────────
@@ -40,7 +43,7 @@ _ph = PasswordHasher(
     memory_cost=65536,  # 64 MB
     parallelism=1,
     hash_len=32,
-    salt_len=16         # Salt 128 bits — generado automáticamente
+    salt_len=16  # Salt 128 bits — generado automáticamente
 )
 
 
@@ -82,6 +85,6 @@ def demo_rainbow_resistance():
     print(f"Hash 1: {h1[:60]}...")
     print(f"Hash 2: {h2[:60]}...")
     print(f"Hash 3: {h3[:60]}...")
-    print(f"\n¿h1 == h2? {h1 == h2}")   # False
+    print(f"\n¿h1 == h2? {h1 == h2}")  # False
     print(f"¿h1 verifica contra token? {verificar_token(token, h1)}")  # True
     print("\n✅ Rainbow Tables son inútiles: cada hash tiene un salt único embebido")

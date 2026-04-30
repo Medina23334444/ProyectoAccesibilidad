@@ -100,9 +100,12 @@ class ConversorFormato(models.Model):
 
             return True, "Conversión exitosa bajo estándares NIST/RFC"
 
+        except ValueError as e:
+            # Fallo de integridad criptográfica (InvalidTag de AES-GCM)
+            return False, f"Integridad comprometida: {str(e)}"
         except Exception as e:
-            # Captura fallos de integridad o errores de procesamiento.
-            return False, f"Error de seguridad o procesamiento: {str(e)}"
+            # Otros errores de procesamiento
+            return False, f"Error de procesamiento: {str(e)}"
 
     def _finalizar_guardado(self, html_content, conteo, inicio):
         """Paso inalterable del algoritmo para registrar resultados en la DB."""

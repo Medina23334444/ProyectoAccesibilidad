@@ -1,0 +1,369 @@
+
+    <html lang="es"><head><meta charset="UTF-8">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #f0f2f5; padding: 40px; color: #1e293b; }
+        main { max-width: 950px; margin: auto; background: white; padding: 60px; border-radius: 12px; }
+        .pdf-page { border-bottom: 2px dashed #e2e8f0; margin-bottom: 50px; padding-bottom: 30px; }
+        h1 { color: #0f172a; text-align: center; }
+        h2 { color: #2563eb; text-transform: uppercase; font-size: 14px; }
+        p { text-align: justify; line-height: 1.8; margin-bottom: 20px; }
+        .table-wrapper { margin: 30px 0; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; }
+        td { padding: 14px; border: 1px solid #f1f5f9; font-size: 14px; }
+    </style></head>
+    <body><main><h1>AAAAA.pdf</h1><article class='pdf-page'><h2>Página 1</h2><figure><img src='/media/procesado\imagenes\img_doc56_p1_0.png' alt='Imagen p1'></figure><p>FEIRNNR - Carrera de Computación</p><h3>UNIVERSIDAD NACIONAL DE LOJA</h3><h2>Desarrollo de un módulo para la Gestión</h2><p>de inventario en una embotelladora de</p><p>Agua (RainTamia Plus).</p><p>Nombre: Isaac David Ramon Tinoco</p><p>Asignatura: Software Engineering Models</p><p>Fecha: 05/02/2026</p><p>Año Lectivo</p><p>2025-2026</p></article><article class='pdf-page'><h2>Página 2</h2><figure><img src='/media/procesado\imagenes\img_doc56_p2_0.png' alt='Imagen p2'></figure><p>FEIRNNR - Carrera de Computación</p><p>1. Introducción.</p><p>Contexto y Problemática</p><p>El presente proyecto de software está dirigido para la PYME embotelladora de agua</p><p>&quot;RainTamia Plus&quot;. La gestión actual del inventario en la empresa presenta deficiencias</p><p>críticas en lo que respecta al control físico, la planificación de reabastecimiento, y la</p><p>trazabilidad en perdidas, afectando esto de manera directa en lo que respecta a la</p><p>eficiencia operativa y la rentabilidad del propio negocio, resultando en la incapacidad de</p><p>satisfacer pedidos, esto último pudiendo ser por falta de insumos necesarios para poder elaborar los productos, o también, existencia de insumos necesarios, pero que estos no se</p><p>hayan utilizado para elaborar productos.</p><p>Problemas identificados</p><p>Falta de control de reabastecimiento: La dependencia de métodos manuales para el •</p><p>control de existencias de materia prima (envases, tapas, sellos, etiquetas) resulta en un manejo ineficiente de la gestión de mínimos y máximos. No existe un</p><p>mecanismo automático que pueda generar una solicitud de orden de compra</p><p>cuando el stock de insumos cae por debajo del punto de reorden.</p><p>Opacidad en la trazabilidad de pérdidas: Existe una incapacidad para mantener un •</p><p>historial destallado de movimientos como &quot;daño&quot; o &quot;perdida&quot;, especialmente los que</p><p>ocurren durante la distribución. La falta de un registro formal de daño/faltante en la</p><p>entrega imposibilita la aplicación contable de la responsabilidad al transportista, impactando directamente en el valor final del inventario.</p><p>Propuesta de valor</p><p>Se propone un módulo para la gestión del inventario en la embotelladora &quot;RainTamia Plus&quot;,</p><p>el cual será la fuente de la verdad sobre el stock de materia prima y productos terminados.</p><p>Esta centralizara el control para los insumos como envases de plástico, tapas y etiquetas.</p><p>1. Automatización de reabastecimiento: El módulo centralizara el control tanto de</p><p>mínimos y máximos, disparando de manera automática solicitudes de orden de</p><p>compra al dueño para la aprobación de estas.</p><p>2. Control físico y lógico: Permitirá el registro detallado de todos los movimientos</p><p>realizados (entradas, ajustes, salidas).</p><p>3. Integridad de costos: Mantendrá actualizado el costo unitario de cada ítem y</p><p>permitirá la valoración monetaria del stock, asegurando la precisión de los datos</p><p>que consume el área financiera.</p><p>Propósito</p><p>El propósito de este proyecto es desarrollar un módulo de gestión de inventarios para la</p><p>PYME embotelladora de agua &quot;RainTamia Plus&quot;, usando el enfoque de Arquitectura Dirigida</p><p>por Modelos (MDA). Este enfoque permite abstraer la lógica de negocio de los detalles técnicos, garantizando que el sistema responda fielmente a a las necesidades de control de</p><p>stock y trazabilidad de la empresa, facilitando su mantenimiento y evolución tecnológica.</p></article><article class='pdf-page'><h2>Página 3</h2><figure><img src='/media/procesado\imagenes\img_doc56_p3_0.png' alt='Imagen p3'></figure><p>FEIRNNR - Carrera de Computación</p><p>Descripción</p><p>El proyecto se desarrolla bajo la metodología de MDA, estructurándose en 3 niveles de abstracción:</p><p>CIM. – Corresponde a modelar los procesos de negocio de la embotelladora, •</p><p>identificando cuellos de botella en el reabastecimiento y la perdida de insumos.</p><p>PIM. – Se definen los patrones y el estilo arquitectónico que se usaran, y resuelven la •</p><p>logica de inventarios sin ligarse a una tecnología en específico.</p><p>PSM. – Corresponde a la transformación del diseño independiente de la plataforma, •</p><p>al uso de tecnologías concretas, para este proyecto, las tecnologías son Django,</p><p>Svelte y SQLite3.</p><p>Funcionalidades Cubiertas:</p><p>Automatización de alertas por movimientos del inventario y bajo stock (RF5, RF6, •</p><p>RF7).</p><p>Registro de movimientos (entrada, salida, ajuste, daño) de la materia prima y • productos (RF7).</p><p>Gestión de materia prima y productos (RF7, RF12). •</p><p>Guardado y restauración de estados del inventario (RF10, RF11). •</p><p>Funcionalidades No Cubiertas:</p><p>Generación de solicitudes de orden de compra. •</p><p>Flujo de aprobación/rechazo de ordenes de compra para el propietario. •</p><p>Valoración monetaria del stock y control de costos unitarios/gastos totales por •</p><p>insumo.</p><p>Gestión de unidades agrupadas. •</p><p>Público Objetivo:</p><p>Estudiantes y desarrolladores. – Como un caso de estudio sobre la aplicación de •</p><p>MDA, tanto para tomar las decisiones correctas aplicadas en el proyecto, asi como</p><p>también analizar los errores o riesgos que se cometieron en el mismo,</p><p>Stakeholders (Dueños de RainTamia Plus). – Para la toma de decisiones basada en el •</p><p>control real de existencias.</p><p>Referencias y herramientas:</p><p>Estándares: UML 2.5 para el modelado. •</p><p>Herramientas: •</p><p>o Visual Studio Code como IDE.</p><p>o Mermaid, StarUML como entornos para modelado.</p><p>o ChatGPT, NotebookLM, Gemini, Claude Sonnet como herramientas de IA.</p><p>o Github para control de versiones.</p></article><article class='pdf-page'><h2>Página 4</h2><figure><img src='/media/procesado\imagenes\img_doc56_p4_0.png' alt='Imagen p4'></figure><p>FEIRNNR - Carrera de Computación</p><p>2. Glosario de Términos.</p><div class='table-wrapper'><table><tr><td>Término</td><td>Definición</td></tr><tr><td>CIM</td><td>Computation Independent Model. Modelo que describe el negocio sin
+tecnología (Requisitos).</td></tr><tr><td>PIM</td><td>Platform Independent Model. Diseño lógico que explica el negocio sin
+llegar a especficiar las tencologias que se van a utilizar.</td></tr><tr><td>PSM</td><td>Platform Specific Model. Modelo detallado con anotaciones de las
+tecnologías que se van a utiliza.</td></tr><tr><td>Materia Prima</td><td>Elementos básicos para la producción (envases de 600ml, tapas, sellos,
+etiquetas).</td></tr><tr><td>Productos
+Terminados</td><td>Corresponde a un elemento que está listo para vender (ej: paca de 20
+unidades x 600ml).</td></tr><tr><td>Punto de Reorden</td><td>Nivel mínimo de stock que dispara automáticamente una solicitud de
+compra.</td></tr><tr><td>Ítem</td><td>Termino para agrupar Materia Prima o Productos Terminados.</td></tr></table></div><p>Ítem Termino para agrupar Materia Prima o Productos Terminados.</p><p>3. Resultados.</p><p>Modelo CIM (Computational Independent Model) •</p><p>Requisitos Funcionales.</p><div class='table-wrapper'><table><tr><td>Nº</td><td>Responsable</td><td>RF</td><td>Descripción</td><td>Priorización
+(MoSCoW)</td></tr><tr><td>RF1</td><td>Propietario</td><td>Autorización
+de compras
+estratégicas</td><td>El sistema debe permitir
+aprobar o rechazar
+solicitudes de orden de
+compra de materia prima
+generadas por el área de
+gestión de inventario
+cuando los niveles estén por
+debajo del mínimo
+establecido.</td><td>S – Should
+Have</td></tr><tr><td>RF2</td><td>Contador</td><td>Valoración del
+inventario</td><td>El sistema debe permitir la
+valoración monetaria del
+inventario de materia prima
+y productos terminados.</td><td>C – Could
+Have</td></tr><tr><td>RF3</td><td>Contador</td><td>Control de
+gastos por
+insumo</td><td>El sistema debe registrar el
+costo unitario de cada
+materia prima y generar
+reportes de costos totales.</td><td>C – Could
+Have</td></tr><tr><td>RF4</td><td>Vendedor</td><td>Registro de
+salidas por
+venta</td><td>El sistema debe descontar
+automáticamente del
+inventario los productos
+terminados asociados a una
+venta confirmada, tomando
+en cuenta la cantidad de
+unidades agrupadas y</td><td>M - Must
+Have</td></tr></table></div></article><article class='pdf-page'><h2>Página 5</h2><figure><img src='/media/procesado\imagenes\img_doc56_p5_0.png' alt='Imagen p5'></figure><p>FEIRNNR - Carrera de Computación</p><div class='table-wrapper'><table><tr><td></td><td></td><td></td><td>realizando la conversión
+automática a unidades base.</td><td></td></tr><tr><td>RF5</td><td>Encargado de
+Inventario/Propietario</td><td>Alertas de bajo
+stock y de
+movimientos
+realizados.</td><td>El sistema debe notificar al
+encargado de inventario y al
+propietario cuando los
+niveles de productos
+terminados o de materia
+prima alcancen o caigan por
+debajo de su punto de
+reabastecimiento
+configurado (ej. mínimo de
+10 pacas de 20 x 600ml,
+500 envases de 600ml)</td><td>M - Must
+Have</td></tr><tr><td>RF6</td><td>Encargado de
+inventario</td><td>Registro de
+movimientos
+de inventario</td><td>El sistema debe mantener
+un historial detallado de
+movimientos (entradas,
+salidas, ajustes, daño) con
+fecha, responsable y
+motivo, incluyendo
+movimientos del tipo “daño”
+o “pérdida” para mercancía
+dañada o extraviada</td><td>M - Must
+Have</td></tr><tr><td>RF7</td><td>Encargado de
+Inventario</td><td>Gestión de
+mínimos y
+máximos</td><td>El sistema debe permitir
+configurar niveles mínimos
+y máximos de stock para
+cada materia prima y
+producto terminado para
+activar alertas de
+reabastecimiento o exceso
+de inventario.</td><td>M - Must
+Have</td></tr><tr><td>RF8</td><td>Encargado de
+Inventario / Vendedor</td><td>Gestión de
+unidades
+agrupadas</td><td>El sistema debe permitir
+definir, modificar y eliminar
+reglas de agrupación (por
+ejemplo, paca de 20 x
+600ml).</td><td>M - Must
+Have</td></tr><tr><td>RF9</td><td>Encargado de
+Inventario</td><td>Generación de
+solicitud de
+orden de
+compra</td><td>El sistema debe generar
+automáticamente una
+solicitud de orden de
+compra para los insumos
+cuyo stock haya caído por
+debajo del mínimo</td><td>M - Must
+Have</td></tr></table></div></article><article class='pdf-page'><h2>Página 6</h2><figure><img src='/media/procesado\imagenes\img_doc56_p6_0.png' alt='Imagen p6'></figure><p>FEIRNNR - Carrera de Computación</p><div class='table-wrapper'><table><tr><td></td><td></td><td></td><td>configurado, debe permitir
+revisar las cantidades
+propuestas y enviar la
+solicitud para su
+aprobación.</td><td></td></tr><tr><td>RF10</td><td>Encargado de
+Inventario</td><td>Guardar estado
+de inventario
+en un
+momento
+determinado</td><td>El sistema debe permitir
+guardar el estado del
+inventario en un momento
+determinado, guardando las
+existencias físicas de todas
+las materias primas y
+productos.</td><td>M - Must
+Have</td></tr><tr><td>RF11</td><td>Encargado de
+Inventario</td><td>Recuperación
+del estado de
+inventario.</td><td>El sistema debe permitir
+recuperar el estado de
+inventario guardado en un
+momento determinado,
+permitiendo volver a
+estados guardados
+temporalmente.</td><td>M - Must
+Have</td></tr><tr><td>RF12</td><td>Encargado de
+Inventario</td><td>Gestión de
+materia prima
+y productos</td><td>El sistema debe permitir la
+gestión (crear, modificar,
+eliminar) de la materia
+prima y productos, junto
+con sus atributos (nombre,
+descripción, stock actual,
+stock mínimo), costo
+unitario (para materia
+prima) y precio unitario
+(para productos).</td><td>M - Must
+Have</td></tr></table></div><p>Tabla 2. Requisitos Funcionales.</p><p>Requisitos No Funcionales.</p><div class='table-wrapper'><table><tr><td>Nº</td><td>Tipo</td><td>Descripción</td></tr><tr><td>RNF01</td><td>Rendimiento</td><td>La consulta del stock y el registro de movimientos se debe
+completar en menos de 5 segundos para evitar retrasos en el
+despacho.</td></tr><tr><td>RNF02</td><td>Seguridad</td><td>El sistema debe restringir la ejecución de movimientos de
+inventario de tipo Ajuste y Daño/Pérdida exclusivamente al
+personal que posea el rol de inventario.</td></tr><tr><td>RNF03</td><td>Trazabilidad</td><td>Cada movimiento de inventario registrado debe capturar de
+manera inmutable la fecha, hora e identificador único del usuario
+que lo ejecutó, garantizando la auditoría contable.</td></tr><tr><td>RNF04</td><td>Usabilidad</td><td>La interfaz para el registro de movimientos debe ser intuitiva y
+navegable, permitiendo al encargado de inventario operar el</td></tr></table></div></article><article class='pdf-page'><h2>Página 7</h2><figure><img src='/media/procesado\imagenes\img_doc56_p7_0.png' alt='Imagen p7'></figure><p>FEIRNNR - Carrera de Computación</p><div class='table-wrapper'><table><tr><td></td><td></td><td>sistema con una capacitación que no supere los 30 minutos.</td></tr><tr><td>RNF05</td><td>Compatibilidad</td><td>El módulo de inventario debe ser completamente funcional y con
+una presentación consistente en los navegadores web Google
+Chrome y Mozilla Firefox.</td></tr></table></div><p>Tabla 3. Requisitos No Funcionales.</p><p>Modelo Conceptual.</p><figure><img src='/media/procesado\imagenes\img_doc56_p7_1.png' alt='Imagen p7'></figure><p>Modelo de Casos de uso</p><figure><img src='/media/procesado\imagenes\img_doc56_p7_2.png' alt='Imagen p7'></figure></article><article class='pdf-page'><h2>Página 8</h2><figure><img src='/media/procesado\imagenes\img_doc56_p8_0.png' alt='Imagen p8'></figure><p>FEIRNNR - Carrera de Computación</p><p>Fig 2. Diagrama de Casos de Uso.</p><p>Descripción de Casos de uso.</p><div class='table-wrapper'><table><tr><td>Nombre</td><td>Registrar movimiento de inventario.</td></tr><tr><td>Actor Principal</td><td>Encargado de Inventario</td></tr><tr><td>Objetivo</td><td>Permitir el registro formal y detallado de cualquier cambio en el stock
+físico que no sea una compra o venta (daño, perdida, corrección de
+conteo), asegurando la trazabilidad.</td></tr><tr><td>Precondición</td><td>1. El actor debe estar autenticado con el rol &quot;Encargado de
+Inventario&quot;.
+2. El ítem (materia prima o producto terminado) debe existir en el
+catálogo.</td></tr><tr><td>Postcondición</td><td>El stock del ítem afectado se actualiza.
+Se genera un nuevo registro en la tabla MovimientoInventario con el tipo
+&quot;Entrada”, “Salida”, “Ajuste”, “Perdida”.
+Se genera una notificación del movimiento realizado, en caso de que el
+movimiento resulte en que el stock actual del producto o materia prima
+este por debajo del mínimo establecido, se generara una notificación
+adicional sobre el nivel de stock por debajo del mínimo.</td></tr><tr><td>Flujo Básico</td><td>1. El encargado de inventario accede a la interfaz de Registro Ajuste
+Movimiento.
+2. El sistema muestra una tabla con los productos, la materia prima
+, y un formulario con el tipo de movimiento (Entrada, Salida,
+Ajuste, Perdida), cantidad y motivo.
+3. El encargado de inventario selecciona un producto o materia
+prima, el tipo de movimiento, la cantidad a ajustar y un motivo
+detallado (ejemplo “Faltante en inventario físico”, “Botellas rotas
+en línea de producción).
+4. El sistema verifica que se haya seleccionado un producto o
+materia prima, que la cantidad sea numérica y el motivo este
+presente.
+5. El sistema actualiza la cantidad en el stock, guarda el movimiento
+con fecha y responsable, y genera una notificación del
+movimiento realizado.
+6. El sistema muestra una confirmación de la operación.</td></tr><tr><td>Flujo
+alternativo.</td><td>Flujo alternativo A1 (A partir del Paso 4): El stock queda negativo (solo
+para ajuste/perdida)
+A1.1 El sistema calcula que el stock resultante será negativo.
+A.1.2 El sistema advierte: “La pérdida excede el stock actual. ¿Desea
+continuar?”, si se cancela, el usuario regresa al paso 3.
+Flujo alternativo A2 (A partir del Paso 5): El stock resultante queda por
+debajo del stock mínimo.
+A2.1 El sistema presenta una confirmación de la operación, junto con un</td></tr></table></div></article><article class='pdf-page'><h2>Página 9</h2><figure><img src='/media/procesado\imagenes\img_doc56_p9_0.png' alt='Imagen p9'></figure><p>FEIRNNR - Carrera de Computación</p><div class='table-wrapper'><table><tr><td></td><td>mensaje en el cual se muestra que el movimiento resulto en un stock
+por debajo del mínimo.
+A2.2 El sistema genera una notificación sobre el nivel de stock por
+debajo del nivel establecido.</td></tr></table></div><p>Tabla 4. Caso de uso detallado &quot;Registrar movimiento de inventario&quot;.</p><div class='table-wrapper'><table><tr><td>Nombre</td><td>Gestionar Productos/Materia Prima</td></tr><tr><td>Actor Principal</td><td>Encargado de Inventario</td></tr><tr><td>Objetivo</td><td>Permitir la creación, edición o eliminación lógica de los ítems (materia
+prima/productos).</td></tr><tr><td>Precondición</td><td>1. El actor debe estar autenticado con el rol &quot;Encargado de
+Inventario&quot;.</td></tr><tr><td>Postcondición</td><td>El registro de la Materia Prima/Producto se actualiza en la base de datos.
+Los niveles de stock actual y mínimo quedan vinculados al nuevo ítem.</td></tr><tr><td>Flujo Básico</td><td>1. El encargado de inventario accede a la interfaz correspondiente
+(Gestionar Productos Terminados/ Gestionar Materias Primas).
+2. El sistema muestra una lista de los ítems ya existentes, y un
+formulario para el registro de un nuevo ítem.
+3. El encargado de inventario ingresa los datos requeridos (nombre,
+descripción, stock actual, stock mínimo), costo unitario (para
+materia prima) y precio unitario (para productos).
+4. El sistema valida que el campo de nombre este completo como
+mínimo.
+5. El sistema guarda la información y confirma el éxito de la
+operación.</td></tr><tr><td>Flujo
+alternativo.</td><td>Flujo alternativo A1 (A partir del Paso 1): Edición de Ítem
+A1.1 El encargado de inventario selecciona un ítem el cual quiera editar.
+A1.2 El sistema carga los datos del ítem seleccionado en el formulario
+para su edición.
+A1.3 El encargado modifica los campos necesarios, y pulsa modificar.
+A1.4 El sistema actualiza la información del ítem modificado.
+Flujo alternativo A2 (A partir del Paso 1): Borrado de ítem
+A2.1 El encargado de inventario selecciona la opción de borrar del ítem.
+A2.2 El sistema muestra un mensaje de confirmación para eliminar el
+ítem.
+A2.3 El encargado confirma la acción.
+A2.4 El sistema elimina la información del ítem.</td></tr></table></div><div class='table-wrapper'><table><tr><td>Nombre</td><td>Guardar Estado de Inventario</td></tr><tr><td>Actor Principal</td><td>Encargado de Inventario</td></tr><tr><td>Objetivo</td><td>Capturar el estado del inventario (información del inventario, stock
+de todos los ítems) de manera temporal en un momento
+determinado.</td></tr><tr><td>Precondición</td><td>1. El actor debe estar autenticado con el rol &quot;Encargado de</td></tr></table></div></article><article class='pdf-page'><h2>Página 10</h2><figure><img src='/media/procesado\imagenes\img_doc56_p10_0.png' alt='Imagen p10'></figure><p>FEIRNNR - Carrera de Computación</p><div class='table-wrapper'><table><tr><td></td><td>Inventario&quot;.</td></tr><tr><td>Postcondición</td><td>1. Se genera un registro temporal del estado del inventario.
+2. Se almacenan las cantidades exactas de ítems al momento de
+guardar el estado del inventario.</td></tr><tr><td>Flujo Básico</td><td>1. El encargado de inventario accede a la interfaz Estado del
+Inventario.
+2. El sistema muestra un resumen previo del estado actual del
+inventario, cantidad de tipos de materia prima, de productos, y
+un total de ambos, además del stock actual con el que cuenta
+cada uno de estos, y un total general.
+3. El encargado de inventario toca el botón de Guardar Snapshot
+4. El sistema procesa la información y guarda el estado actual del
+inventario de manera temporal.
+5. El sistema muestra un mensaje de “Estado del inventario
+guardado exitosamente”.</td></tr><tr><td>Flujo
+alternativo.</td><td></td></tr></table></div><div class='table-wrapper'><table><tr><td>Nombre</td><td>Restaurar Estado de Inventario</td></tr><tr><td>Actor Principal</td><td>Encargado de Inventario</td></tr><tr><td>Objetivo</td><td>Recuperar información de stock de un estado temporal guardado
+previo para revertir el estado actual en caso de errores masivos de
+registro.</td></tr><tr><td>Precondición</td><td>1. El actor debe estar autenticado con el rol &quot;Encargado de
+Inventario&quot;.
+2. Debe haber un estado de inventario guardado temporalmente.</td></tr><tr><td>Postcondición</td><td>1. Se sobreescribe el inventario actual con los valores del estado
+del inventario guardado.</td></tr><tr><td>Flujo Básico</td><td>1. El encargado de inventario accede a la interfaz Estado del
+Inventario.
+2. El sistema muestra un resumen previo del estado actual del
+inventario, cantidad de tipos de materia prima, de productos, y
+un total de ambos, además del stock actual con el que cuenta
+cada uno de estos, y un total general.
+3. El encargado de inventario toca el botón de Restaurar Estado
+Anterior
+4. El sistema muestra un mensaje para asegurar la acción.
+5. El encargado de inventario confirma la acción.
+6. El sistema sobrescribe los datos actuales del inventario por los
+datos del estado del inventario temporal.
+7. El sistema muestra un mensaje de “Estado del inventario
+restaurado exitosamente”</td></tr></table></div></article><article class='pdf-page'><h2>Página 11</h2><figure><img src='/media/procesado\imagenes\img_doc56_p11_0.png' alt='Imagen p11'></figure><p>FEIRNNR - Carrera de Computación</p><div class='table-wrapper'><table><tr><td>Flujo
+alternativo.</td><td>Flujo alternativo A1 (A partir del Paso 5): No hay estados anteriores
+A1.1 El sistema no encuentra datos de un estado de inventario
+guardado.
+A1.2 El sistema muestra un mensaje de “No hay estados anteriores
+para restaurar”.</td></tr></table></div><div class='table-wrapper'><table><tr><td>Nombre</td><td>Generar Orden de Compra</td></tr><tr><td>Actor Principal</td><td>Encargado de Inventario/ Sistema (Iniciador)</td></tr><tr><td>Objetivo</td><td>Automatizar la detección de la necesidad de reabastecimiento para la
+materia prima, generando una solicitud formal para la aprobación
+gerencial.</td></tr><tr><td>Precondición</td><td>2. El actor debe estar autenticado con el rol &quot;Encargado de
+Inventario&quot; para revisar o enviar la solicitud.
+3. El stock de una o más Materias Primas (ej. tapas, envases,
+etiquetas) ha caído por debajo del nivel mínimo establecido
+(RF7).</td></tr><tr><td>Postcondición</td><td>3. Se crea un nuevo registro de SolicitudCompra con estado
+&quot;PENDIENTE DE APROBACIÓN&quot;.
+4. Se notifica al Propietario (mediante el Servicio de Aprobación
+Gerencial) para su revisión.</td></tr><tr><td>Flujo Básico</td><td>8. El sistema (a través de un trigger) realiza la validación de los
+niveles de stock.
+9. El sistema identifica que el stock de X ítem (por ejemplo,
+envases de 600ml) ha caído por debajo del nivel mínimo
+establecido.
+10. El sistema crea una nueva solicitud de orden de compra que
+incluye al ítem y la cantidad sugerida (por ejemplo, podría
+establecerse hasta el nivel máximo de dicho ítem).
+11. El encargado de inventario recibe una alerta para revisar la
+Solicitud generada (opcionalmente puede ajustar la cantidad
+según vea necesario).
+12. El encargado de inventario envía la solicitud (el sistema
+también puede enviarla) al servicio externo para la
+autorización de la compra.
+13. El sistema notifica al Propietario que tiene una solicitud
+pendiente de aprobación.
+14. El proceso pasa a un estado de espera hasta que el gerente
+general interactúe con el sistema externo.</td></tr><tr><td>Flujo
+alternativo.</td><td>Flujo alternativo A1: Stock se corrigió antes de enviar la solicitud.
+A1.1 El encargado de inventario registra una entrada o un ajuste
+positivo justo después de que el sistema detecto el nivel bajo de
+stock, pero antes de enviar la solicitud.</td></tr></table></div></article><article class='pdf-page'><h2>Página 12</h2><figure><img src='/media/procesado\imagenes\img_doc56_p12_0.png' alt='Imagen p12'></figure><p>FEIRNNR - Carrera de Computación</p><div class='table-wrapper'><table><tr><td></td><td>A1.2 El sistema valida que el stock del ítem X ya ha superado el nivel
+mínimo establecido.
+A.1.3 El sistema cancela el envió y notifica al encargado de inventario
+que “El reabastecimiento ya no es necesario”.
+Flujo alternativo A2: Falla en el servicio de aprobación.
+A2.1 El sistema intenta conectarse con el servicio de aprobación
+gerencial y falla.
+A.2.2 El sistema almacena la solicitud en un estado de “FALLA DE
+ENVIO” y notifica al encargado de inventario para que la reintente
+manualmente.</td></tr></table></div><p>Tabla 5. Caso de uso detallado &quot;Registrar movimiento de inventario&quot;.</p><p>Actores Involucrados.</p><div class='table-wrapper'><table><tr><td>Actor</td><td>Funcionalidades Clave</td></tr><tr><td>Usuarios Finales</td><td>None</td></tr><tr><td>Encargado
+de
+Inventario</td><td>• Encargado de la ejecución física y el registro de
+entradas/salidas/ajustes.
+• Configuración de mínimos/máximos y unidades agrupadas.
+• Generación de solicitud de orden de compra.
+• Recepción de alertas de bajo stock.</td></tr><tr><td>Vendedor</td><td>• Iniciador de la salida por venta.
+• Consulta de stock disponible.</td></tr><tr><td>Administradores</td><td>None</td></tr><tr><td>Contador</td><td>• Valoración del inventario.
+• Control del costo unitario</td></tr><tr><td>Propietario</td><td>• Aprobación de compras.</td></tr><tr><td>Sistemas Externos</td><td>None</td></tr><tr><td>Módulo de
+Ventas</td><td>• Interactúa con el módulo a través del registro por salida de venta.</td></tr><tr><td>Módulo de
+Contabilidad</td><td>• Interactúa con el módulo para obtener datos financieros</td></tr><tr><td>Servicio de
+Aprobación
+Gerencial</td><td>• Interactúa con el módulo para la aprobación de órdenes de compra.</td></tr></table></div><p>Modelo PIM (Platform Independent Model) •</p><p>o Diagrama de clases gdel dominio completo</p></article><article class='pdf-page'><h2>Página 13</h2><figure><img src='/media/procesado\imagenes\img_doc56_p13_0.png' alt='Imagen p13'></figure><p>FEIRNNR - Carrera de Computación</p><p>Modelo de Dominio</p><figure><img src='/media/procesado\imagenes\img_doc56_p13_1.png' alt='Imagen p13'></figure><p>Diagrama de Paquetes</p></article><article class='pdf-page'><h2>Página 14</h2><figure><img src='/media/procesado\imagenes\img_doc56_p14_0.png' alt='Imagen p14'></figure><p>FEIRNNR - Carrera de Computación</p><figure><img src='/media/procesado\imagenes\img_doc56_p14_1.png' alt='Imagen p14'></figure><p>Diagrama de Componentes.</p></article><article class='pdf-page'><h2>Página 15</h2><figure><img src='/media/procesado\imagenes\img_doc56_p15_0.png' alt='Imagen p15'></figure><p>FEIRNNR - Carrera de Computación</p><figure><img src='/media/procesado\imagenes\img_doc56_p15_1.png' alt='Imagen p15'></figure><p>Decisiones de Diseño</p><p>Patrones Aplicados •</p><div class='table-wrapper'><table><tr><td>Patrón</td><td>Descripción</td><td>Justificación</td></tr><tr><td>Account</td><td>Usado para gestionar valores
+que cambian en el tiempo y
+requieren trazabilidad.</td><td>Elegido para mejorar la
+precisión temporal,
+auditabilidad y trazabilidad de
+la evolución de un valor a lo
+largo del tiempo</td></tr><tr><td>Summary Account</td><td>Usado para la organización de
+cuentas con una estructura
+jerárquica, usando una cuenta
+de alto nivel como contenedor
+lógico.</td><td>Seleccionado para facilitar la
+consolidación de multiples
+cuentas (materia prima y
+productos en este caso)</td></tr><tr><td>MVC</td><td>Aplicado para separar la
+logica de datos del control</td><td>Permite delegar la
+responsabilidad de la interfaz
+visual al frontend,
+manteniendo al backend
+enfocado en la lógica.</td></tr><tr><td>Repository</td><td>Actua como un mediador
+entre la logica de negocio y la
+persistencia de datos.</td><td>Encapsula la lógica de acceso
+a datos, haciendo que la capa
+de negocios sea agnóstica al
+motor de base de datos.</td></tr><tr><td>API Gateway</td><td>Centralización de peticiones
+en el cliente del frontend
+hacia los recursos del
+backend.</td><td>Maneja de forma unificada las
+peticiones y errores,
+ocultando la complejidad de
+los servicios internos al
+usuario final.</td></tr><tr><td>Memento</td><td>Usado para capturar y
+restaurar estados del
+inventario.</td><td>Necesidad de registrar y
+restaurar estados temporales
+del inventario en caso de
+errores cometidos en el
+registro de entradas o salidas.</td></tr></table></div></article><article class='pdf-page'><h2>Página 16</h2><figure><img src='/media/procesado\imagenes\img_doc56_p16_0.png' alt='Imagen p16'></figure><p>FEIRNNR - Carrera de Computación</p><div class='table-wrapper'><table><tr><td>Observer</td><td>Aplicado para el sistema de
+notificaciones.</td><td>Seleccionado para permitir
+que el inventario notifique
+automáticamente obre
+cambios de stock.</td></tr><tr><td>Command</td><td>Usado para encapsular
+operaciones de entrada y
+salida de inventario como
+objetos independientes.</td><td>Elegido para tratar cada
+movimiento como un objeto
+único.</td></tr></table></div><p>Estilos Arquitectónicos •</p><div class='table-wrapper'><table><tr><td>Estilo Arquitectónico</td><td>Descripción</td><td>Justificación</td></tr><tr><td>Arquitectura en Capas</td><td>El sistema se organiza en 3
+capas: De Presentación
+(Frontend), de Lógica
+(Backend) y de Persistencia
+(Datos)</td><td>Seleccionada para separación
+de responsabilidades entre
+capas.</td></tr><tr><td>Cliente-Servidor</td><td>Esquema en el cual existe un
+proveedor, o servidor, el cual
+debe atender a las peticiones
+de un demandante o también
+llamado cliente.</td><td>Proporciona una
+comunicación jerárquica y
+controlada, permitiendo que
+el servidor orqueste las reglas
+de negocio de manera
+centralizada.</td></tr></table></div><p>PSM (Platform Specific Model) •</p><p>Tecnologías Conretas.</p><div class='table-wrapper'><table><tr><td>Componente</td><td>Tecnologia</td><td>Version</td></tr><tr><td>Lenguaje Backend</td><td>Python</td><td>3.13.5</td></tr><tr><td>Framework Backend</td><td>Django</td><td>6.0</td></tr><tr><td>Framework Frontend</td><td>Svelte</td><td>3.59.2</td></tr><tr><td>Base de datos</td><td>SQLite</td><td>3.49.1</td></tr></table></div><p>Tecnologías Conretas.</p></article><article class='pdf-page'><h2>Página 17</h2><figure><img src='/media/procesado\imagenes\img_doc56_p17_0.png' alt='Imagen p17'></figure><p>FEIRNNR - Carrera de Computación</p><figure><img src='/media/procesado\imagenes\img_doc56_p17_1.png' alt='Imagen p17'></figure><p>Diagrama de despliegue</p></article><article class='pdf-page'><h2>Página 18</h2><figure><img src='/media/procesado\imagenes\img_doc56_p18_0.png' alt='Imagen p18'></figure><p>FEIRNNR - Carrera de Computación</p><figure><img src='/media/procesado\imagenes\img_doc56_p18_1.png' alt='Imagen p18'></figure><p>Transformaciones MDA</p><p>Herramienta usada para transformación:</p><p>StarUML: Actuando como entorno de modelado. •</p><p>Extensión Django para StarUML: Se uso este motor de transformación apra automatizar • la generación de archivos para models.py y a partir del diagrama de clases, reduciendo errores manuales y asegurando que la arquitectura del software sea el fiel reflejo del modelo de negocio.}</p><p>Reglas usadas para transformaciones:</p><p>Los atributos de las clases se transformaron en campos específicos usados por Django, •</p></article><article class='pdf-page'><h2>Página 19</h2><figure><img src='/media/procesado\imagenes\img_doc56_p19_0.png' alt='Imagen p19'></figure><p>FEIRNNR - Carrera de Computación</p><p>como models.CharField, models.DateField, etc.</p><p>Modelo IM (Implementation Model) •</p><p>Transformacion de PSM a Codigo:</p><p>Para la generación del código base, se uso la extensión de Django para StarUML, este proceso permitió:</p><p>Mapeo de atributos a campos específicos que usa Django como models.CharField, • models.StringField, etc.</p><p>Garantizar que la estructura de clases definida en el diseño se replique exactamente en • la estructura de archivos del Backend.</p><p>En cuanto a la distribución del esfuerzo de codificación, se desglosa de la siguiente manera:</p><p>Generacion automática de 20%, lo que corresponde a la definición de la capa de datos • (Modelos), StarUML gneero el esqueleto estructural y las relaciones de base de datos.</p><h2>Desarrollo manual de 80%, lo que corresponde a la implementación de Reglas de • Negocio, validaciones, logica de patrones de diseño y desarrollo de interfaz en Svelte.</h2><p>Ejemplos:</p><figure><img src='/media/procesado\imagenes\img_doc56_p19_1.png' alt='Imagen p19'></figure><p>Fig 9. Código generado a partir del modelo PSM</p></article><article class='pdf-page'><h2>Página 20</h2><figure><img src='/media/procesado\imagenes\img_doc56_p20_0.png' alt='Imagen p20'></figure><p>FEIRNNR - Carrera de Computación</p><figure><img src='/media/procesado\imagenes\img_doc56_p20_1.png' alt='Imagen p20'></figure><p>Fig 10. Código implementado de manera manual</p><p>o Pruebas unitarias básicas.</p><p>Video Demo Pruebas unitarias en video:</p><p>4. Conclusiones, recomendaciones y aprendizajes.</p></article><article class='pdf-page'><h2>Página 21</h2><figure><img src='/media/procesado\imagenes\img_doc56_p21_0.png' alt='Imagen p21'></figure><p>FEIRNNR - Carrera de Computación</p><h2>Conclusiones.</h2><p>El flujo de trabajo de MDA permite una transición coherente desde los requisitos • que son representados como CIM hasta el código generado conocido como IM. La definición previa de un PIM solido facilito bastante que el cambio hacia el PSM (siendo específicamente para Django) fuera una tarea únicamente de mapeo técnico y no de llevar a cabo tareas de rediseño lógico. Gracias a documentar primeramente la lógica de negocio en PUM, el sistema queda • preparado para ser portado a otras tecnologías en caso de que sea necesario (como Node.js o Spring boot) en el futuro, requiriendo únicamente que se transforme a nivel de PSM.</p><p>Aprendizajes.</p><p>Se comprendió de manera más profunda como en MDD, los modelos realmente • llevan el papel como el eje central de todo el proyecto, indicando como se trabajara, como lo es en el diagrama de componentes, el cual sirvió de guía para poder organizar la estructura de carpetas en el backend de Django.</p><p>Recomendaciones.</p><p>Para un posible crecimiento en la demanda de la empresa RainTamia Plus, se • recomienda transformar el modelo actual que es monolítico, hacia un modelo PSM de microservicios, de este modo, por ejemplo, los módulos de &quot;Inventario&quot; y &quot;Ventas&quot; serán artefactos de despliegue independientes.</p><p>5. Declaración de uso de IA</p><p>Se usaron herramientas Gemini (Flash 2.5) para organizar y estructurar las ideas • del presente trabajo. Se usaron herramientas Claude Sonnet (4.5) como un apoyo para codificación • rápida en el presente trabajo. Se usaron herramientas NotebookLM para resumir información de artículos para • una investigación previa sobre escenarios similares al caso de estudio.</p><p>6. Anexos</p><p>Repositorio en Github: Repositorio •</p></article></main></body></html>

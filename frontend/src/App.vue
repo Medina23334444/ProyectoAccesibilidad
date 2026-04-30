@@ -30,7 +30,7 @@ const iniciarProceso = async () => {
     pasoActual.value = '¡Proceso completado con éxito!'
 
     // Abrir automáticamente el archivo generado
-    window.open(`http://127.0.0.1:8000${conversion.url_archivo}`, '_blank')
+    window.open(`https://127.0.0.1:8000${conversion.url_archivo}`, '_blank')
 
   } catch (error) {
     pasoActual.value = 'Error: ' + (error.response?.data?.error || 'No se pudo conectar con el servidor')
@@ -104,7 +104,7 @@ const iniciarProceso = async () => {
             </div>
 
             <div class="action-area">
-              <a :href="'http://127.0.0.1:8000' + resultadoHtml.url_archivo" target="_blank"
+              <a :href="'https://127.0.0.1:8000' + resultadoHtml.url_archivo" target="_blank"
                  class="btn-view">
                 👁️ Abrir Documento Accesible
               </a>

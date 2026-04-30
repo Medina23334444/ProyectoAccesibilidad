@@ -11,6 +11,12 @@ from .crypto_utils import cifrar_archivo_temporal, generar_token_sesion, hashear
 
 @api_view(['POST'])
 def ejecutar_conversion_api(request, doc_id):
+    if not settings.AES_KEY:
+        return Response(
+            {"error": "AES_ENCRYPTION_KEY no configurada en el servidor"},
+            status=503
+        )
+
     documento = get_object_or_404(DocumentoPDF, id=doc_id)
 
     # 1. GENERACIÓN DE IDENTIDAD SEGURA (Fase ABI)

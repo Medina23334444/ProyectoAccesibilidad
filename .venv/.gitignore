@@ -1,0 +1,22 @@
+# Entorno virtual
+.venv/
+venv/
+env/
+
+# Archivos de configuración sensible
+.env
+.env.template
+
+# Base de datos y temporales
+db.sqlite3
+*.sqlite3
+__pycache__/
+*.pyc
+
+# Archivos generados y medios
+media/
+html_generados/
+procesado/
+
+# Archivos del IDE
+.idea/
