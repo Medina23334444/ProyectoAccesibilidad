@@ -9,6 +9,8 @@ from validacion.models import DocumentoPDF
 from .crypto_utils import descifrar_archivo_temporal
 from django.conf import settings
 
+from .security_utils import proteger_archivo
+
 
 class Protocolo(models.Model):
     nombre = models.CharField(max_length=100)
@@ -108,19 +110,20 @@ class ConversorFormato(models.Model):
             return False, f"Error de procesamiento: {str(e)}"
 
     def _finalizar_guardado(self, html_content, conteo, inicio):
-        """Paso inalterable del algoritmo para registrar resultados en la DB."""
+        """Paso del algoritmo para registrar resultados y proteger archivos."""
+        # 1. Guardado estándar en la base de datos
         res, _ = ArchivoHTML.objects.update_or_create(
             documento_fuente=self.documento_origen,
-            defaults={
-                'cantidadEtiquetas': conteo,
-                'etiquetasSemanticas': "main, article, h1, h2, p, table, figure",
-                'lenguajeHTML': "es",
-                'nivelAccesibilidad': "AA (Intermedio)"
-            }
+            defaults={'cantidadEtiquetas': conteo, 'nivelAccesibilidad': "AA (Intermedio)"}
         )
 
         nombre_final = f"{os.path.splitext(self.documento_origen.nombre_archivo)[0]}.html"
         res.archivo.save(nombre_final, ContentFile(html_content.encode('utf-8')), save=True)
+
+        # 2. IMPLEMENTACIÓN DE SECURITY_UTILS
+        # Ciframos el archivo físico recién guardado en el servidor
+        ruta_fisica = res.archivo.path
+        proteger_archivo(ruta_fisica)  # Esto crea el archivo .html.enc
 
         self.tiempoEjecucion = time.time() - inicio
         self.save()
