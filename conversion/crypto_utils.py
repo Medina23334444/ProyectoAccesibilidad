@@ -1,5 +1,4 @@
-# conversion/crypto_utils.py
-# Implementación ABI: Cifrado AES-256-GCM + Argon2id
+
 
 import os
 import base64
