@@ -131,4 +131,3 @@ class ConversorFormato(models.Model):
         # Actualizamos el estado del documento original en el módulo de validación
         self.documento_origen.estado = 'CONVERTIDO'
         self.documento_origen.save()
-        GEMINI_API_KEY = AIzaSyBhptwyEJO - TRKdQaZb0hAhZrLaMn5rtaY
