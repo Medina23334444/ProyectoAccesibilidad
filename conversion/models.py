@@ -100,7 +100,7 @@ class ConversorFormato(models.Model):
             # --- PASO 3: PERSISTENCIA FIJA ---
             self._finalizar_guardado(html_final, conteo, inicio)
 
-            return True, "Conversión exitosa bajo estándares NIST/RFC"
+            return True, "Conversión exitosa bajo estándares NIST"
 
         except ValueError as e:
             # Fallo de integridad criptográfica (InvalidTag de AES-GCM)
