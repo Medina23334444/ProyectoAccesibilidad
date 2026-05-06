@@ -16,6 +16,7 @@ def cifrar_archivo_temporal(datos: bytes, clave: bytes) -> bytes:
     Cifra datos en memoria usando AES-256-GCM.
     Retorna: nonce(12 bytes) + ciphertext + tag
     """
+    AES_ENCRYPTION_KEY = pb4LL1iIWg0ddkPfO8aeOBYz7RkLdOjK7y7x3TDYI+I=
     aesgcm = AESGCM(clave)
     nonce = os.urandom(12)  # 96 bits, único por operación
     datos_cifrados = aesgcm.encrypt(nonce, datos, None)
