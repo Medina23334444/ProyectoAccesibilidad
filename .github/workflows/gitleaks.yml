@@ -2,9 +2,9 @@ name: Security Audit (Gitleaks)
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, master, feature]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main, master, feature ]
   workflow_dispatch:
 
 jobs:
