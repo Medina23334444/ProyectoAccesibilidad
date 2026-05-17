@@ -8,12 +8,14 @@ class EstadoDocumento(models.TextChoices):
     VALIDADO = 'VALIDADO', 'Validado'
     CONVERTIDO = 'CONVERTIDO', 'Convertido'
     ERROR = 'ERROR', 'Error'
+    ENPROCESO = 'ENPROCESO', 'Enproceso'
 
 
 class TipoContenido(models.TextChoices):
     TEXTUAL = 'TEXTUAL', 'Textual'
     MIXTO = 'MIXTO', 'Mixto'
     IMAGEN = 'IMAGEN', 'Imagen (Escaneado)'
+    TODO = 'TODO', 'todo'
 
 
 class Documento(models.Model):

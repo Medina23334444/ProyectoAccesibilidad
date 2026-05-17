@@ -12,10 +12,6 @@ import secrets
 # ─── AES-256-GCM: Cifrado de archivos temporales ───────────────────────────
 
 def cifrar_archivo_temporal(datos: bytes, clave: bytes) -> bytes:
-    """
-    Cifra datos en memoria usando AES-256-GCM.
-    Retorna: nonce(12 bytes) + ciphertext + tag
-    """
     aesgcm = AESGCM(clave)
     nonce = os.urandom(12)  # 96 bits, único por operación
     datos_cifrados = aesgcm.encrypt(nonce, datos, None)
@@ -31,7 +27,7 @@ def descifrar_archivo_temporal(datos_cifrados: bytes, clave: bytes) -> bytes:
     try:
         return aesgcm.decrypt(nonce, ciphertext, None)
     except InvalidTag:
-        raise ValueError("Integridad comprometida: el archivo fue alterado o la clave es incorrecta")
+        raise ValueError("Integridad comprometida: el archivo fue alterado")
 
 
 # ─── Argon2id: Hash de tokens de sesión ────────────────────────────────────
